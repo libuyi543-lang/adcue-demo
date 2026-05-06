@@ -40,7 +40,7 @@ let countdownTimer = null;
 let aiTimers = [];
 let preprocessTimers = [];
 let currentStyleIndex = 0;
-let selectedNodeIndex = 1;
+let selectedNodeIndex = 2;
 let userStartedPlayback = false;
 let lastRenderedDecisionKey = "";
 
@@ -48,45 +48,45 @@ const episodeAnalysis = [
   {
     time: "00:00",
     second: 0,
-    title: "信息密集段落",
+    title: "医院病房问询",
     type: "禁止广告",
     color: "red",
-    reason: "人物信息密集，插入广告会削弱信任和情绪连续性",
+    reason: "病房、医护和人物问询同屏，插入广告会削弱信任和情绪连续性",
     adCategories: [],
-    subtitle: "信息密集段落，系统保护观看沉浸",
+    subtitle: "医院病房问询，系统保护观看沉浸",
     decision: "不展示广告",
   },
   {
     time: "00:24",
     second: 24,
-    title: "生活化转场",
-    type: "轻广告",
-    color: "yellow",
-    reason: "人物互动轻松，适合热饮、便利店等低打扰剧情彩蛋",
-    adCategories: ["便利店", "水饮", "社区团购"],
-    subtitle: "生活化转场，情绪轻松，适合低打扰剧情彩蛋",
-    decision: "展示剧情彩蛋广告",
+    title: "病房问询延续",
+    type: "禁止广告",
+    color: "red",
+    reason: "仍处于医疗空间和人物问询段落，不适合商业露出",
+    adCategories: [],
+    subtitle: "病房问询延续，系统继续禁止广告",
+    decision: "不展示广告",
   },
   {
     time: "00:48",
     second: 48,
-    title: "情绪敏感段落",
-    type: "禁止广告",
-    color: "red",
-    reason: "人物情绪升高，是高敏感情绪区，不适合任何商业打断",
-    adCategories: [],
-    subtitle: "情绪升高，系统标记为广告禁入区",
-    decision: "不展示广告",
+    title: "路边线索交接",
+    type: "轻广告",
+    color: "yellow",
+    reason: "室外路边对话，旁边有出租车和出行语境，适合低打扰出行类彩蛋",
+    adCategories: ["打车", "汽修", "导航"],
+    subtitle: "路边线索交接，适合低打扰出行类剧情彩蛋",
+    decision: "展示剧情彩蛋广告",
   },
   {
     time: "01:12",
     second: 72,
-    title: "稳定环境镜头",
+    title: "夜间药店场景",
     type: "可广告",
     color: "green",
-    reason: "对白弱、画面稳定，适合做可关闭的生活服务入口",
-    adCategories: ["清洁用品", "本地生活", "公益倡议"],
-    subtitle: "稳定环境镜头，可做不遮挡主体的生活服务入口",
+    reason: "夜间店内环境稳定，适合可关闭的药店跑腿或热饮入口",
+    adCategories: ["药店", "跑腿", "热饮"],
+    subtitle: "夜间药店场景，可做不遮挡主体的生活服务入口",
     decision: "展示互动广告",
   },
 ];
@@ -95,24 +95,84 @@ const adStyles = [
   {
     id: "gentle",
     name: "温柔版",
-    title: "桦林的夜有点冷，先喝口热的。",
-    copy: "附近便利店热饮券，暂停时轻轻出现，不挡剧情。",
+    title: "查线索要跑远路，先叫辆车。",
+    copy: "附近打车券轻量出现，不挡人物和字幕。",
   },
   {
     id: "bullet",
     name: "弹幕版",
-    title: "别硬扛东北夜风了，整杯热豆浆。",
-    copy: "热饮券已备好，点一下就领，不点就继续看。",
+    title: "线索都到路边了，车也该到了。",
+    copy: "打车券只在出行语境里出现，点一下就领。",
   },
   {
     id: "brand",
     name: "品牌版",
-    title: "夜路、冷风、热饮，都在附近。",
-    copy: "本地便利店热饮优惠，适合转场间隙轻量露出。",
+    title: "从路边出发，下一站更快到。",
+    copy: "出行服务轻量提示，可关闭，不遮挡剧情。",
   },
 ];
 
 const adCopyByCategory = {
+  打车: {
+    title: "查线索要跑远路，先叫辆车。",
+    copy: "附近打车券轻量出现，不挡人物和字幕。",
+    coupon: "领取打车券",
+    styles: {
+      gentle: ["查线索要跑远路，先叫辆车。", "附近打车券轻量出现，不挡人物和字幕。"],
+      bullet: ["线索都到路边了，车也该到了。", "打车券只在出行语境里出现，点一下就领。"],
+      brand: ["从路边出发，下一站更快到。", "出行服务轻量提示，可关闭，不遮挡剧情。"],
+    },
+  },
+  汽修: {
+    title: "车况有疑问，先做个检测。",
+    copy: "汽修检测券只在路边出行语境里出现，不打断剧情。",
+    coupon: "领取汽修券",
+    styles: {
+      gentle: ["车况有疑问，先做个检测。", "汽修检测券只在路边出行语境里出现，不打断剧情。"],
+      bullet: ["别只查人，车也得查查。", "车辆检测入口轻量出现，不点就继续看。"],
+      brand: ["路边线索之外，也看见车况需求。", "本地汽修服务只在合适场景露出。"],
+    },
+  },
+  导航: {
+    title: "下一站在哪，路线先看清。",
+    copy: "导航出行服务轻量提示，可关闭，不遮挡剧情。",
+    coupon: "查看路线服务",
+    styles: {
+      gentle: ["下一站在哪，路线先看清。", "导航出行服务轻量提示，可关闭，不遮挡剧情。"],
+      bullet: ["别迷路，线索还等着呢。", "路线服务轻提示，不挡人物对白。"],
+      brand: ["方向清楚一点，剧情继续往前。", "导航入口出现在路边场景，不抢戏。"],
+    },
+  },
+  药店: {
+    title: "夜里临时买药，不用多跑一趟。",
+    copy: "附近药店跑腿券轻量出现，用户愿意点再展开。",
+    coupon: "领取跑腿券",
+    styles: {
+      gentle: ["夜里临时买药，不用多跑一趟。", "附近药店跑腿券轻量出现，用户愿意点再展开。"],
+      bullet: ["都到药店门口了，别白跑。", "附近药店服务一键查看，不遮挡人物。"],
+      brand: ["夜间药店还亮着，服务也能跟上。", "药店跑腿入口在稳定店内场景轻量露出。"],
+    },
+  },
+  跑腿: {
+    title: "夜里临时买点东西，让跑腿送到。",
+    copy: "跑腿优惠轻量露出，不遮挡人物和字幕。",
+    coupon: "领取跑腿券",
+    styles: {
+      gentle: ["夜里临时买点东西，让跑腿送到。", "跑腿优惠轻量露出，不遮挡人物和字幕。"],
+      bullet: ["真不用多跑，让人送来。", "跑腿券点一下就领，不点就继续看。"],
+      brand: ["夜里的临时需求，也可以更省心。", "本地跑腿服务只在生活服务场景出现。"],
+    },
+  },
+  热饮: {
+    title: "夜里有点冷，先喝口热的。",
+    copy: "附近热饮券轻量出现，不抢剧情。",
+    coupon: "领取热饮券",
+    styles: {
+      gentle: ["夜里有点冷，先喝口热的。", "附近热饮券轻量出现，不抢剧情。"],
+      bullet: ["东北夜风顶不住，整口热的。", "热饮券已备好，不点就继续看。"],
+      brand: ["夜路、冷风、热饮，都在附近。", "本地热饮优惠，适合转场间隙轻量露出。"],
+    },
+  },
   餐饮: {
     title: "食堂这口热乎劲，附近也有。",
     copy: "本地餐饮券轻量提示，适合生活过场，不遮挡人物对白。",
@@ -473,6 +533,14 @@ function updateAdCard(node) {
   couponBtn.textContent = copy.coupon;
   adStyles[0].title = copy.title;
   adStyles[0].copy = copy.copy;
+  if (copy.styles) {
+    adStyles.forEach((style) => {
+      const styleCopy = copy.styles[style.id];
+      if (styleCopy) {
+        [style.title, style.copy] = styleCopy;
+      }
+    });
+  }
   setAdStyle("gentle");
 }
 

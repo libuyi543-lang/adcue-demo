@@ -30,7 +30,7 @@
       <section class="scenario-panel" aria-label="剧情时间点选择">
         <div class="scenario-head">
           <strong>选择一个剧情卡片，体验不同广告决策</strong>
-          <span id="scenarioVerdict">当前：生活化转场，可展示轻广告</span>
+          <span id="scenarioVerdict">当前：路边线索交接，轻广告</span>
         </div>
         <div class="scenario-grid" id="scenarioGrid"></div>
       </section>
@@ -55,11 +55,11 @@
               playsinline
               preload="metadata"
             ></video>
-            <div class="subtitle" id="oldSubtitle">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+            <div class="subtitle" id="oldSubtitle">路边线索交接，适合低打扰出行类剧情彩蛋</div>
             <div class="old-ad hidden" id="oldAd">
               <div class="old-ad-box">
                 <span>贴片广告</span>
-                <h3>家电大促 15 秒</h3>
+                <h3>无关贴片广告 15 秒</h3>
                 <p>不管剧情情绪，直接挡住画面。</p>
                 <strong>5 秒后可跳过</strong>
               </div>
@@ -69,7 +69,7 @@
           <div class="control-row">
             <button class="solid danger" id="runOld">体验传统广告</button>
             <button class="plain" id="skipOld">跳过广告</button>
-            <span id="oldTime">00:24</span>
+            <span id="oldTime">00:48</span>
           </div>
           <p class="experience-note" id="oldNote">传统规则只看时间点，不知道这段剧情适不适合被打断。</p>
         </article>
@@ -93,15 +93,15 @@
               playsinline
               preload="metadata"
             ></video>
-            <div class="subtitle" id="smartSubtitle">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+            <div class="subtitle" id="smartSubtitle">路边线索交接，适合低打扰出行类剧情彩蛋</div>
             <div class="read-chip hidden" id="readChip">读取机会地图中</div>
             <div class="smart-ad hidden" id="smartAd">
               <span class="mini-label">剧情彩蛋</span>
-              <p class="ad-context" id="adContext">生活化转场 · 推荐热饮</p>
-              <h3 id="smartAdTitle">桦林的夜有点冷，先喝口热的。</h3>
-              <p id="smartAdCopy">附近便利店热饮券，暂停时轻轻出现，不挡剧情。</p>
+              <p class="ad-context" id="adContext">路边线索交接 · 推荐打车</p>
+              <h3 id="smartAdTitle">查线索要跑远路，先叫辆车。</h3>
+              <p id="smartAdCopy">附近打车券轻量出现，不挡人物和字幕。</p>
               <div class="smart-actions">
-                <button id="claimCoupon">领取热饮券</button>
+                <button id="claimCoupon">领取打车券</button>
                 <button id="changeTone">换风格</button>
               </div>
               <div class="coupon-toast hidden" id="couponToast">已领取，接下来 5 分钟减少广告打扰。</div>
@@ -116,7 +116,7 @@
           <div class="control-row">
             <button class="solid" id="runSmart">暂停，体验我的广告</button>
             <button class="plain" id="continueSmart">继续看剧</button>
-            <span id="smartTime">00:24</span>
+            <span id="smartTime">00:48</span>
           </div>
           <div class="decision-list" id="decisionList"></div>
         </article>

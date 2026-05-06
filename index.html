@@ -53,7 +53,7 @@
           <div class="hero-panel">
             <div class="monitor-label">
               <span>DIRECTOR MONITOR</span>
-              <strong>REC 00:24</strong>
+              <strong>REC 00:48</strong>
             </div>
             <div class="mini-player">
               <video
@@ -68,8 +68,8 @@
               ></video>
               <span class="video-scanline"></span>
               <div class="player-caption">
-                <span>正在播放：生活剧素材 · 生活化转场</span>
-                <span>00:24 / 01:36</span>
+                <span>正在播放：生活剧素材 · 路边线索交接</span>
+                <span>00:48 / 01:36</span>
               </div>
             </div>
             <div class="signal-grid">
@@ -107,8 +107,8 @@
                 <div class="ad-overlay" id="traditionalAd">
                   <div class="ad-box">
                     <span class="ad-label">普通贴片广告</span>
-                    <h3>大促广告 15 秒</h3>
-                    <p>照护场景还没结束，广告直接挡住画面。用户刚刚进入剧情，情绪被硬切走。</p>
+                    <h3>无关贴片广告 15 秒</h3>
+                    <p>画面正在路边交接线索，广告却按固定时间盖住画面，和剧情语境完全无关。</p>
                     <div class="countdown">等待 <span id="countdown">15</span>s · 5 秒后可跳过</div>
                     <button class="skip-btn" id="skipAd">跳过广告</button>
                   </div>
@@ -176,19 +176,19 @@
               <div class="analysis-dashboard">
                 <article>
                   <span>剧情结构</span>
-                  <strong>信息密集、生活转场、情绪敏感、稳定环境、片尾回收</strong>
+                  <strong>医院问询、病房延续、路边线索、夜间药店</strong>
                 </article>
                 <article>
                   <span>情绪曲线</span>
-                  <strong>00:00 信息密集，00:24 生活转场，00:48 情绪敏感，01:12 稳定环境</strong>
+                  <strong>00:00 医院问询禁入，00:24 病房延续禁入，00:48 路边线索轻广告，01:12 夜间药店可广告</strong>
                 </article>
                 <article>
                   <span>广告禁入区</span>
-                  <strong>信息密集、身体不适、情绪敏感、人物关系转折前 90 秒</strong>
+                  <strong>病房、医护问询、人物关系紧张、关键信息未交代完的段落</strong>
                 </article>
                 <article>
                   <span>低打扰广告点</span>
-                  <strong>社区过场、物品交接、主动暂停、片尾、稳定环境镜头</strong>
+                  <strong>路边线索交接、出行语境、夜间药店、主动暂停、稳定环境镜头</strong>
                 </article>
               </div>
             </div>
@@ -234,7 +234,7 @@
             <div class="video-card ai-video">
               <div class="card-caption">
                 <span>AI DIRECTED AD MOMENT</span>
-                <strong id="playerMomentLabel">00:24 生活化转场</strong>
+                <strong id="playerMomentLabel">00:48 路边线索交接</strong>
               </div>
               <div class="video-scene">
                 <video
@@ -247,7 +247,7 @@
                   preload="metadata"
                   aria-label="AdCue 实时判断的真实剧集画面"
                 ></video>
-                <div class="subtitle" id="subtitleLine">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+                <div class="subtitle" id="subtitleLine">路边线索交接，适合低打扰出行类剧情彩蛋</div>
                 <div class="pause-chip" id="pauseChip">读取机会地图中</div>
                 <div class="decision-overlay hidden" id="decisionOverlay">
                   <span class="ad-label">AI 决策</span>
@@ -256,9 +256,9 @@
                 </div>
                 <div class="egg-card hidden" id="eggCard">
                   <span class="ad-label">AI 生成剧情彩蛋</span>
-                  <p class="scene-meta" id="sceneMeta">当前场景：生活化转场 · 推荐广告：热饮</p>
-                  <h3 id="eggTitle">桦林的夜有点冷，先喝口热的。</h3>
-                  <p id="eggCopy">附近便利店热饮券，暂停时轻轻出现，不挡剧情。</p>
+                  <p class="scene-meta" id="sceneMeta">当前场景：路边线索交接 · 推荐广告：打车</p>
+                  <h3 id="eggTitle">查线索要跑远路，先叫辆车。</h3>
+                  <p id="eggCopy">附近打车券轻量出现，不挡人物和字幕。</p>
                   <button class="shuffle-style" id="shuffleStyle">换一种广告风格</button>
                   <div class="style-switcher" aria-label="广告语气选择">
                     <button class="style-btn active" data-style="gentle">温柔版</button>
@@ -266,7 +266,7 @@
                     <button class="style-btn" data-style="brand">品牌版</button>
                   </div>
                   <div class="egg-actions">
-                    <button id="couponBtn">领取热饮券</button>
+                    <button id="couponBtn">领取打车券</button>
                     <button id="continueBtn">继续看剧</button>
                   </div>
                   <div class="coupon-result hidden" id="couponResult">
@@ -276,7 +276,7 @@
               </div>
               <div class="playback-panel">
                 <div class="playback-meta">
-                  <strong id="currentNodeTitle">生活化转场</strong>
+                  <strong id="currentNodeTitle">路边线索交接</strong>
                   <span id="currentNodeType">轻广告</span>
                 </div>
                 <input
@@ -285,7 +285,7 @@
                   min="0"
                   max="96"
                   step="24"
-                  value="24"
+                  value="48"
                   aria-label="当前剧情节点"
                   disabled
                 />
@@ -294,7 +294,7 @@
               <div class="control-row">
                 <button class="ghost-control" id="togglePlayback">播放片段</button>
                 <button class="pause-btn" id="runAi">暂停并读取机会地图</button>
-                <span class="time" id="currentTimeLabel">00:24</span>
+                <span class="time" id="currentTimeLabel">00:48</span>
               </div>
             </div>
 

@@ -2,11 +2,12 @@ const scenarios = [
   {
     time: "00:00",
     second: 0,
-    title: "信息密集段落",
+    title: "医院病房问询",
     type: "禁止广告",
     color: "red",
-    subtitle: "信息密集段落，系统保护观看沉浸",
-    reason: "人物信息密集，这里不应该出现商业打扰。",
+    subtitle: "医院病房问询，系统保护观看沉浸",
+    reason: "病房、医护和人物问询同屏，这里不应该出现商业打扰。",
+    adCategory: "",
     adTitle: "",
     adCopy: "",
     coupon: "",
@@ -14,46 +15,56 @@ const scenarios = [
   {
     time: "00:24",
     second: 24,
-    title: "生活化转场",
-    type: "轻广告",
-    color: "yellow",
-    subtitle: "生活化转场，情绪轻松，适合低打扰剧情彩蛋",
-    reason: "人物互动轻松，用户主动暂停时可以出现右下角轻量彩蛋。",
-    adTitle: "桦林的夜有点冷，先喝口热的。",
-    adCopy: "附近便利店热饮券，暂停时轻轻出现，不挡剧情。",
-    coupon: "领取热饮券",
-  },
-  {
-    time: "00:48",
-    second: 48,
-    title: "情绪敏感段落",
+    title: "病房问询延续",
     type: "禁止广告",
     color: "red",
-    subtitle: "情绪升高，系统标记为广告禁入区",
-    reason: "人物情绪升高，系统必须闭嘴。",
+    subtitle: "病房问询延续，系统继续禁止广告",
+    reason: "仍处于医疗空间和人物问询段落，不适合商业露出。",
+    adCategory: "",
     adTitle: "",
     adCopy: "",
     coupon: "",
   },
   {
+    time: "00:48",
+    second: 48,
+    title: "路边线索交接",
+    type: "轻广告",
+    color: "yellow",
+    subtitle: "路边线索交接，适合低打扰出行类剧情彩蛋",
+    reason: "室外路边对话，旁边有出租车和出行语境，可以出现低打扰彩蛋。",
+    adCategory: "打车",
+    adTitle: "查线索要跑远路，先叫辆车。",
+    adCopy: "附近打车券轻量出现，不挡人物和字幕。",
+    coupon: "领取打车券",
+  },
+  {
     time: "01:12",
     second: 72,
-    title: "稳定环境镜头",
+    title: "夜间药店场景",
     type: "可广告",
     color: "green",
-    subtitle: "稳定环境镜头，可做不遮挡主体的生活服务入口",
-    reason: "对白弱、画面稳定，适合可关闭的本地生活服务入口。",
-    adTitle: "旧楼道也要亮堂一点。",
-    adCopy: "家清用品小额券，可关闭浮层，不影响继续观看。",
-    coupon: "领取家清券",
+    subtitle: "夜间药店场景，可做不遮挡主体的生活服务入口",
+    reason: "夜间店内环境稳定，适合可关闭的药店跑腿或热饮入口。",
+    adCategory: "药店跑腿",
+    adTitle: "夜里临时买药，不用多跑一趟。",
+    adCopy: "附近药店跑腿券轻量出现，用户愿意点再展开。",
+    coupon: "领取跑腿券",
   },
 ];
 
-const toneCopies = [
-  ["桦林的夜有点冷，先喝口热的。", "附近便利店热饮券，暂停时轻轻出现，不挡剧情。"],
-  ["别硬扛东北夜风了，整杯热豆浆。", "热饮券已备好，点一下就领，不点就继续看。"],
-  ["夜路、冷风、热饮，都在附近。", "本地便利店热饮优惠，适合转场间隙轻量露出。"],
-];
+const toneCopiesByScenario = {
+  路边线索交接: [
+    ["查线索要跑远路，先叫辆车。", "附近打车券轻量出现，不挡人物和字幕。"],
+    ["线索都到路边了，车也该到了。", "打车券只在出行语境里出现，点一下就领。"],
+    ["从路边出发，下一站更快到。", "出行服务轻量提示，可关闭，不遮挡剧情。"],
+  ],
+  夜间药店场景: [
+    ["夜里临时买药，不用多跑一趟。", "附近药店跑腿券轻量出现，用户愿意点再展开。"],
+    ["都到药店门口了，别白跑。", "附近药店服务一键查看，不遮挡人物。"],
+    ["夜间药店还亮着，服务也能跟上。", "药店跑腿入口在稳定店内场景轻量露出。"],
+  ],
+};
 
 const scenarioGrid = document.querySelector("#scenarioGrid");
 const scenarioVerdict = document.querySelector("#scenarioVerdict");
@@ -81,7 +92,7 @@ const couponToast = document.querySelector("#couponToast");
 const decisionList = document.querySelector("#decisionList");
 const oldNote = document.querySelector("#oldNote");
 
-let selectedIndex = 1;
+let selectedIndex = 2;
 let timers = [];
 let toneIndex = 0;
 
@@ -210,7 +221,7 @@ function runSmartExperience() {
     setTimeout(() => {
       readChip.classList.add("hidden");
       if (allowed) {
-        adContext.textContent = `${item.title} · 推荐本地生活`;
+        adContext.textContent = `${item.title} · 推荐${item.adCategory}`;
         smartAdTitle.textContent = item.adTitle;
         smartAdCopy.textContent = item.adCopy;
         claimCoupon.textContent = item.coupon;
@@ -233,6 +244,10 @@ function continueSmartVideo() {
 }
 
 function changeAdTone() {
+  const item = scenarios[selectedIndex];
+  const toneCopies = toneCopiesByScenario[item.title] || [
+    [item.adTitle, item.adCopy],
+  ];
   toneIndex = (toneIndex + 1) % toneCopies.length;
   const [title, copy] = toneCopies[toneIndex];
   smartAdTitle.textContent = title;
