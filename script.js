@@ -48,45 +48,45 @@ const episodeAnalysis = [
   {
     time: "00:00",
     second: 0,
-    title: "医院病房探视",
+    title: "信息密集段落",
     type: "禁止广告",
     color: "red",
-    reason: "病床、医护和人物信息密集，插入广告会削弱信任和情绪连续性",
+    reason: "人物信息密集，插入广告会削弱信任和情绪连续性",
     adCategories: [],
-    subtitle: "医院病房段落信息密集，系统保护观看沉浸",
+    subtitle: "信息密集段落，系统保护观看沉浸",
     decision: "不展示广告",
   },
   {
     time: "00:24",
     second: 24,
-    title: "社区送水寒暄",
+    title: "生活化转场",
     type: "轻广告",
     color: "yellow",
-    reason: "物品交接、人物表情轻松，适合水饮等顺剧情的低打扰彩蛋",
-    adCategories: ["水饮", "便利店", "社区团购"],
-    subtitle: "物品交接，情绪轻松，适合低打扰剧情彩蛋",
+    reason: "人物互动轻松，适合热饮、便利店等低打扰剧情彩蛋",
+    adCategories: ["便利店", "水饮", "社区团购"],
+    subtitle: "生活化转场，情绪轻松，适合低打扰剧情彩蛋",
     decision: "展示剧情彩蛋广告",
   },
   {
     time: "00:48",
     second: 48,
-    title: "家庭照护",
+    title: "情绪敏感段落",
     type: "禁止广告",
     color: "red",
-    reason: "身体不适和家人照护是高敏感情绪区，不适合任何商业打断",
+    reason: "人物情绪升高，是高敏感情绪区，不适合任何商业打断",
     adCategories: [],
-    subtitle: "家庭照护情绪升高，系统标记为广告禁入区",
+    subtitle: "情绪升高，系统标记为广告禁入区",
     decision: "不展示广告",
   },
   {
     time: "01:12",
     second: 72,
-    title: "社区环境镜头",
+    title: "稳定环境镜头",
     type: "可广告",
     color: "green",
-    reason: "人物对白弱、环境信息稳定，适合做可关闭的生活服务入口",
+    reason: "对白弱、画面稳定，适合做可关闭的生活服务入口",
     adCategories: ["清洁用品", "本地生活", "公益倡议"],
-    subtitle: "社区环境镜头，可做不遮挡主体的生活服务入口",
+    subtitle: "稳定环境镜头，可做不遮挡主体的生活服务入口",
     decision: "展示互动广告",
   },
 ];
@@ -574,8 +574,9 @@ updatePlayback(episodeAnalysis[selectedNodeIndex].second);
 showStage("hero");
 
 timelineScrubber.addEventListener("input", () => {
+  const nearest = getNearestNode(Number(timelineScrubber.value));
+  selectNode(nearest.index);
   resetAiDemo();
-  updatePlayback(Number(timelineScrubber.value));
 });
 
 episodeVideos.forEach((video) => {
@@ -593,8 +594,4 @@ episodeVideos.forEach((video) => {
 
 afterVideo?.addEventListener("timeupdate", () => {
   if (!userStartedPlayback) return;
-
-  const rounded = Math.round(afterVideo.currentTime);
-  timelineScrubber.value = rounded;
-  updatePlayback(rounded, { syncVideo: false });
 });

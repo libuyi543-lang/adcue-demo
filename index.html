@@ -68,7 +68,7 @@
               ></video>
               <span class="video-scanline"></span>
               <div class="player-caption">
-                <span>正在播放：生活剧素材 · 社区送水寒暄</span>
+                <span>正在播放：生活剧素材 · 生活化转场</span>
                 <span>00:24 / 01:36</span>
               </div>
             </div>
@@ -176,15 +176,15 @@
               <div class="analysis-dashboard">
                 <article>
                   <span>剧情结构</span>
-                  <strong>社区食堂、医院病房、送水寒暄、家庭照护、片尾回收</strong>
+                  <strong>信息密集、生活转场、情绪敏感、稳定环境、片尾回收</strong>
                 </article>
                 <article>
                   <span>情绪曲线</span>
-                  <strong>00:00 医院病房，00:24 社区送水，00:48 家庭照护，01:12 社区环境</strong>
+                  <strong>00:00 信息密集，00:24 生活转场，00:48 情绪敏感，01:12 稳定环境</strong>
                 </article>
                 <article>
                   <span>广告禁入区</span>
-                  <strong>病房探视、身体不适、家庭照护、人物关系转折前 90 秒</strong>
+                  <strong>信息密集、身体不适、情绪敏感、人物关系转折前 90 秒</strong>
                 </article>
                 <article>
                   <span>低打扰广告点</span>
@@ -234,7 +234,7 @@
             <div class="video-card ai-video">
               <div class="card-caption">
                 <span>AI DIRECTED AD MOMENT</span>
-                <strong id="playerMomentLabel">00:24 社区送水寒暄</strong>
+                <strong id="playerMomentLabel">00:24 生活化转场</strong>
               </div>
               <div class="video-scene">
                 <video
@@ -256,7 +256,7 @@
                 </div>
                 <div class="egg-card hidden" id="eggCard">
                   <span class="ad-label">AI 生成剧情彩蛋</span>
-                  <p class="scene-meta" id="sceneMeta">当前场景：社区送水寒暄 · 推荐广告：热饮</p>
+                  <p class="scene-meta" id="sceneMeta">当前场景：生活化转场 · 推荐广告：热饮</p>
                   <h3 id="eggTitle">桦林的夜有点冷，先喝口热的。</h3>
                   <p id="eggCopy">附近便利店热饮券，暂停时轻轻出现，不挡剧情。</p>
                   <button class="shuffle-style" id="shuffleStyle">换一种广告风格</button>
@@ -276,7 +276,7 @@
               </div>
               <div class="playback-panel">
                 <div class="playback-meta">
-                  <strong id="currentNodeTitle">社区送水寒暄</strong>
+                  <strong id="currentNodeTitle">生活化转场</strong>
                   <span id="currentNodeType">轻广告</span>
                 </div>
                 <input
@@ -284,16 +284,17 @@
                   type="range"
                   min="0"
                   max="96"
-                  step="10"
+                  step="24"
                   value="24"
-                  aria-label="拖动播放进度"
+                  aria-label="当前剧情节点"
+                  disabled
                 />
                 <div class="scene-buttons" id="sceneButtons" aria-label="选择剧情时间点"></div>
               </div>
               <div class="control-row">
                 <button class="ghost-control" id="togglePlayback">播放片段</button>
                 <button class="pause-btn" id="runAi">暂停并读取机会地图</button>
-                <span class="time" id="currentTimeLabel">12:42</span>
+                <span class="time" id="currentTimeLabel">00:24</span>
               </div>
             </div>
 
