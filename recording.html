@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AdCue · 录屏体验版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./recording.css" />
+  </head>
+  <body>
+    <main class="record-shell">
+      <header class="hero-bar">
+        <div>
+          <p class="eyebrow">Tencent Video Ads Challenge Demo</p>
+          <h1>AdCue</h1>
+          <p class="hero-copy">我来亲自体验：同一段剧情里，传统广告怎么打断，我的广告怎么学会看场合。</p>
+        </div>
+        <div class="record-guide" aria-label="录屏操作步骤">
+          <span>1 选择剧情卡片</span>
+          <span>2 体验传统广告</span>
+          <span>3 体验 AdCue</span>
+        </div>
+      </header>
+
+      <section class="scenario-panel" aria-label="剧情时间点选择">
+        <div class="scenario-head">
+          <strong>选择一个剧情卡片，体验不同广告决策</strong>
+          <span id="scenarioVerdict">当前：社区送水寒暄，可展示轻广告</span>
+        </div>
+        <div class="scenario-grid" id="scenarioGrid"></div>
+      </section>
+
+      <section class="compare-board" aria-label="广告体验对比">
+        <article class="experience-card bad">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">Old Experience</p>
+              <h2>传统广告</h2>
+            </div>
+            <span class="status-pill bad">按时间强插</span>
+          </div>
+
+          <div class="player-frame">
+            <video
+              id="oldVideo"
+              class="episode-video"
+              src="./01-demo.mp4"
+              poster="./assets/poster-care.jpg"
+              muted
+              playsinline
+              preload="metadata"
+            ></video>
+            <div class="subtitle" id="oldSubtitle">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+            <div class="old-ad hidden" id="oldAd">
+              <div class="old-ad-box">
+                <span>贴片广告</span>
+                <h3>家电大促 15 秒</h3>
+                <p>不管剧情情绪，直接挡住画面。</p>
+                <strong>5 秒后可跳过</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <button class="solid danger" id="runOld">体验传统广告</button>
+            <button class="plain" id="skipOld">跳过广告</button>
+            <span id="oldTime">00:24</span>
+          </div>
+          <p class="experience-note" id="oldNote">传统规则只看时间点，不知道这段剧情适不适合被打断。</p>
+        </article>
+
+        <article class="experience-card good">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">New Experience</p>
+              <h2>我的产品</h2>
+            </div>
+            <span class="status-pill good">读取机会地图</span>
+          </div>
+
+          <div class="player-frame">
+            <video
+              id="smartVideo"
+              class="episode-video"
+              src="./01-demo.mp4"
+              poster="./assets/poster-water.jpg"
+              muted
+              playsinline
+              preload="metadata"
+            ></video>
+            <div class="subtitle" id="smartSubtitle">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+            <div class="read-chip hidden" id="readChip">读取机会地图中</div>
+            <div class="smart-ad hidden" id="smartAd">
+              <span class="mini-label">剧情彩蛋</span>
+              <p class="ad-context" id="adContext">社区送水寒暄 · 推荐热饮</p>
+              <h3 id="smartAdTitle">桦林的夜有点冷，先喝口热的。</h3>
+              <p id="smartAdCopy">附近便利店热饮券，暂停时轻轻出现，不挡剧情。</p>
+              <div class="smart-actions">
+                <button id="claimCoupon">领取热饮券</button>
+                <button id="changeTone">换风格</button>
+              </div>
+              <div class="coupon-toast hidden" id="couponToast">已领取，接下来 5 分钟减少广告打扰。</div>
+            </div>
+            <div class="block-card hidden" id="blockCard">
+              <span class="mini-label">AI 决策</span>
+              <h3>这里不出现广告</h3>
+              <p id="blockCopy">当前是高敏感剧情段落，系统保护观看沉浸。</p>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <button class="solid" id="runSmart">暂停，体验我的广告</button>
+            <button class="plain" id="continueSmart">继续看剧</button>
+            <span id="smartTime">00:24</span>
+          </div>
+          <div class="decision-list" id="decisionList"></div>
+        </article>
+      </section>
+
+      <section class="takeaway-strip">
+        <strong>核心差异</strong>
+        <span>传统广告：按时间出现</span>
+        <span>我的产品：先读整集，生成机会地图，再决定该不该出现</span>
+      </section>
+    </main>
+
+    <script src="./recording.js"></script>
+  </body>
+</html>

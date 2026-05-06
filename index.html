@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AdCue Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <div>
+            <strong>AdCue</strong>
+            <span>Tencent Video Ads Challenge Demo</span>
+          </div>
+        </div>
+        <nav class="stage-nav" aria-label="Demo 阶段导航">
+          <button class="nav-btn active" data-stage="hero">开场</button>
+          <button class="nav-btn" data-stage="before">改造前</button>
+          <button class="nav-btn" data-stage="preprocess">读完整集</button>
+          <button class="nav-btn" data-stage="map">机会地图</button>
+          <button class="nav-btn" data-stage="after">剧情彩蛋</button>
+          <button class="nav-btn" data-stage="value">收束</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="stage hero-stage active" id="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Tencent Video Ads Challenge Concept</p>
+            <h1>AdCue</h1>
+            <p class="hero-text">
+              Ads that know when to appear. AI 先读懂剧情，再决定广告什么时候出现。
+            </p>
+            <div class="hook-row" aria-label="核心对比">
+              <span>传统广告按时间插入</span>
+              <span>AI 广告按剧情节奏出现</span>
+            </div>
+            <div class="hero-actions">
+              <button class="primary-btn" data-stage-target="before">开始体验</button>
+              <button class="ghost-btn" data-stage-target="map">直接看机会地图</button>
+              <button class="ghost-btn" data-stage-target="after">直接试玩</button>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="monitor-label">
+              <span>DIRECTOR MONITOR</span>
+              <strong>REC 00:24</strong>
+            </div>
+            <div class="mini-player">
+              <video
+                class="episode-video"
+                data-video-role="hero"
+                src="./01-demo.mp4"
+                poster="./assets/poster-water.jpg"
+                muted
+                playsinline
+                preload="metadata"
+                aria-label="真实剧集素材预览"
+              ></video>
+              <span class="video-scanline"></span>
+              <div class="player-caption">
+                <span>正在播放：生活剧素材 · 社区送水寒暄</span>
+                <span>00:24 / 01:36</span>
+              </div>
+            </div>
+            <div class="signal-grid">
+              <span>整集预分析</span>
+              <span>机会地图</span>
+              <span>轻量判断</span>
+              <span>剧情彩蛋</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage compare-stage" id="before">
+          <div class="section-head">
+            <p class="eyebrow">Before</p>
+            <h2>剧情刚到高潮，突然插入无关广告</h2>
+          </div>
+          <div class="demo-grid">
+            <div class="video-card traditional">
+              <div class="card-caption">
+                <span>TRADITIONAL AD BREAK</span>
+                <strong>情绪中断</strong>
+              </div>
+              <div class="video-scene">
+                <video
+                  class="episode-video"
+                  data-video-role="before"
+                  src="./01-demo.mp4"
+                  poster="./assets/poster-care.jpg"
+                  muted
+                  playsinline
+                  preload="metadata"
+                  aria-label="传统广告插入前的真实剧集画面"
+                ></video>
+                <div class="subtitle">系统未识别情绪段落，仍按固定时间强插广告</div>
+                <div class="ad-overlay" id="traditionalAd">
+                  <div class="ad-box">
+                    <span class="ad-label">普通贴片广告</span>
+                    <h3>大促广告 15 秒</h3>
+                    <p>照护场景还没结束，广告直接挡住画面。用户刚刚进入剧情，情绪被硬切走。</p>
+                    <div class="countdown">等待 <span id="countdown">15</span>s · 5 秒后可跳过</div>
+                    <button class="skip-btn" id="skipAd">跳过广告</button>
+                  </div>
+                </div>
+              </div>
+              <div class="control-row">
+                <span class="dot red"></span>
+                <span>广告强插中</span>
+                <span class="time">00:48</span>
+              </div>
+            </div>
+            <aside class="insight-card danger">
+              <h3>用户讨厌的不是广告，而是广告不看场合</h3>
+              <div class="tag-row">
+                <span>打断</span>
+                <span>不相关</span>
+                <span>只能等待</span>
+              </div>
+              <p>
+                传统广告在抢注意力。它没有理解剧情高潮，也没有判断这一刻是否应该保持沉浸。
+              </p>
+              <button class="primary-btn" data-stage-target="preprocess">看 AI 如何先读完整集</button>
+            </aside>
+          </div>
+        </section>
+
+        <section class="stage preprocess-stage" id="preprocess">
+          <div class="section-head">
+            <p class="eyebrow">Pre-analysis</p>
+            <h2>AI 先读完整集，而不是每次暂停都临时识别</h2>
+          </div>
+          <div class="preprocess-layout">
+            <div class="pipeline-card">
+              <div class="pipeline-column">
+                <p class="panel-kicker">输入内容</p>
+                <div class="chip-list input-list" id="inputList">
+                  <span>字幕文件</span>
+                  <span>剧情简介</span>
+                  <span>关键帧</span>
+                  <span>音频情绪</span>
+                  <span>场景切分</span>
+                </div>
+              </div>
+              <div class="pipeline-action">
+                <button class="primary-btn" id="generateMap">生成剧情广告机会地图</button>
+                <p id="preprocessStatus">视频上线前完成一次整集预分析，多用户复用结果。</p>
+              </div>
+              <div class="pipeline-column">
+                <p class="panel-kicker">输出能力</p>
+                <div class="chip-list output-list" id="outputList">
+                  <span>剧情结构</span>
+                  <span>情绪曲线</span>
+                  <span>广告禁入区</span>
+                  <span>低打扰广告点</span>
+                  <span>可匹配商品类型</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="director-card preprocess-copy">
+              <div class="console-head">
+                <span class="pulse"></span>
+                <strong>内容预处理面板</strong>
+              </div>
+              <div class="analysis-dashboard">
+                <article>
+                  <span>剧情结构</span>
+                  <strong>社区食堂、医院病房、送水寒暄、家庭照护、片尾回收</strong>
+                </article>
+                <article>
+                  <span>情绪曲线</span>
+                  <strong>00:00 医院病房，00:24 社区送水，00:48 家庭照护，01:12 社区环境</strong>
+                </article>
+                <article>
+                  <span>广告禁入区</span>
+                  <strong>病房探视、身体不适、家庭照护、人物关系转折前 90 秒</strong>
+                </article>
+                <article>
+                  <span>低打扰广告点</span>
+                  <strong>社区过场、物品交接、主动暂停、片尾、稳定环境镜头</strong>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage map-stage" id="map">
+          <div class="section-head">
+            <p class="eyebrow">Opportunity Map</p>
+            <h2>这不是普通广告位表，而是一张剧情广告机会地图</h2>
+          </div>
+          <div class="map-layout">
+            <div class="timeline-card">
+              <div class="map-legend">
+                <span><i class="legend-dot allow"></i>适合广告</span>
+                <span><i class="legend-dot light"></i>只适合轻广告</span>
+                <span><i class="legend-dot block"></i>禁止广告</span>
+              </div>
+              <div class="timeline-list" id="timelineList" aria-label="剧情广告机会地图"></div>
+            </div>
+            <aside class="insight-card map-insight">
+              <h3>AI 不只是识别画面，它在给整集内容做广告编排</h3>
+              <p>
+                视频上线前先预处理整集内容，生成可复用的机会地图。用户观看时，只读取当前时间点并做频控、遮挡和行为校验。
+              </p>
+              <div class="tag-row">
+                <span>更少实时算力</span>
+                <span>更稳的体验</span>
+                <span>更像平台产品</span>
+              </div>
+              <p class="try-hint">点击左侧任意时间点，或直接进入播放页拖动进度条试玩。</p>
+              <button class="primary-btn" data-stage-target="after">进入用户观看判断</button>
+            </aside>
+          </div>
+        </section>
+
+        <section class="stage ai-stage" id="after">
+          <div class="section-head">
+            <p class="eyebrow">Realtime Decision</p>
+            <h2>用户观看时，系统只做轻量判断</h2>
+          </div>
+          <div class="ai-layout">
+            <div class="video-card ai-video">
+              <div class="card-caption">
+                <span>AI DIRECTED AD MOMENT</span>
+                <strong id="playerMomentLabel">00:24 社区送水寒暄</strong>
+              </div>
+              <div class="video-scene">
+                <video
+                  class="episode-video"
+                  data-video-role="after"
+                  src="./01-demo.mp4"
+                  poster="./assets/poster-water.jpg"
+                  muted
+                  playsinline
+                  preload="metadata"
+                  aria-label="AdCue 实时判断的真实剧集画面"
+                ></video>
+                <div class="subtitle" id="subtitleLine">物品交接，情绪轻松，适合低打扰剧情彩蛋</div>
+                <div class="pause-chip" id="pauseChip">读取机会地图中</div>
+                <div class="decision-overlay hidden" id="decisionOverlay">
+                  <span class="ad-label">AI 决策</span>
+                  <h3 id="decisionTitle">这里不出现广告</h3>
+                  <p id="decisionCopy">当前为剧情关键段落，系统保护观看沉浸。</p>
+                </div>
+                <div class="egg-card hidden" id="eggCard">
+                  <span class="ad-label">AI 生成剧情彩蛋</span>
+                  <p class="scene-meta" id="sceneMeta">当前场景：社区送水寒暄 · 推荐广告：热饮</p>
+                  <h3 id="eggTitle">桦林的夜有点冷，先喝口热的。</h3>
+                  <p id="eggCopy">附近便利店热饮券，暂停时轻轻出现，不挡剧情。</p>
+                  <button class="shuffle-style" id="shuffleStyle">换一种广告风格</button>
+                  <div class="style-switcher" aria-label="广告语气选择">
+                    <button class="style-btn active" data-style="gentle">温柔版</button>
+                    <button class="style-btn" data-style="bullet">弹幕版</button>
+                    <button class="style-btn" data-style="brand">品牌版</button>
+                  </div>
+                  <div class="egg-actions">
+                    <button id="couponBtn">领取热饮券</button>
+                    <button id="continueBtn">继续看剧</button>
+                  </div>
+                  <div class="coupon-result hidden" id="couponResult">
+                    已领取优惠券。接下来 5 分钟减少广告打扰。
+                  </div>
+                </div>
+              </div>
+              <div class="playback-panel">
+                <div class="playback-meta">
+                  <strong id="currentNodeTitle">社区送水寒暄</strong>
+                  <span id="currentNodeType">轻广告</span>
+                </div>
+                <input
+                  id="timelineScrubber"
+                  type="range"
+                  min="0"
+                  max="96"
+                  step="10"
+                  value="24"
+                  aria-label="拖动播放进度"
+                />
+                <div class="scene-buttons" id="sceneButtons" aria-label="选择剧情时间点"></div>
+              </div>
+              <div class="control-row">
+                <button class="ghost-control" id="togglePlayback">播放片段</button>
+                <button class="pause-btn" id="runAi">暂停并读取机会地图</button>
+                <span class="time" id="currentTimeLabel">12:42</span>
+              </div>
+            </div>
+
+            <div class="ai-console">
+              <div class="console-head">
+                <span class="pulse"></span>
+                <strong>轻量判断链路</strong>
+              </div>
+              <div class="analysis-list" id="analysisList">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stage value-stage" id="value">
+          <div class="section-head">
+            <p class="eyebrow">Takeaway</p>
+            <h2>AI 先读懂整集剧情，生成一张广告机会地图</h2>
+          </div>
+          <div class="quote-card">
+            <p>AI 不是让广告更精准地打扰你，而是让广告学会看场合。</p>
+            <strong>让广告知道什么时候出现，也知道什么时候闭嘴。</strong>
+          </div>
+          <div class="value-grid">
+            <article class="value-card">
+              <span class="value-icon">U</span>
+              <h3>用户</h3>
+              <p>少打扰，更相关，有选择。广告从被迫观看变成可参与的剧情彩蛋。</p>
+            </article>
+            <article class="value-card">
+              <span class="value-icon">P</span>
+              <h3>平台</h3>
+              <p>广告不破坏沉浸，库存价值更高，形成更有差异化的 AI 广告体验。</p>
+            </article>
+            <article class="value-card">
+              <span class="value-icon">A</span>
+              <h3>广告主</h3>
+              <p>品牌进入剧情语境，记忆更自然，互动转化也更有理由发生。</p>
+            </article>
+            <article class="value-card">
+              <span class="value-icon">E</span>
+              <h3>工程侧</h3>
+              <p>整集预分析一次，多用户复用，实时侧只做轻量判断，降低算力成本。</p>
+            </article>
+          </div>
+          <div class="risk-strip">
+            <span>品牌安全</span>
+            <span>隐私保护</span>
+            <span>版权边界</span>
+            <span>频次控制</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
